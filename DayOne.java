@@ -9,21 +9,25 @@ public class DayOne {
             BufferedReader bf = new BufferedReader(new FileReader("input.txt"));
             while (bf.ready()) {
                 String line = bf.readLine();
+
+                // separate the direction and distance
                 int distance = Integer.parseInt(line.substring(1));
 
+                // increment or decrement dial as appropriate
                 if (line.charAt(0) == 'R') {
                     dial += distance;
-                }
-                else   if (line.charAt(0) == 'L') {
+                } else if (line.charAt(0) == 'L') {
                     dial -= distance;
                 }
 
-                while(dial>99)
-                    dial -=100;
-                while(dial<0)
-                    dial +=100;
+                // check for over/underflow
+                while (dial > 99)
+                    dial -= 100;
+                while (dial < 0)
+                    dial += 100;
 
-                if(dial==0)
+                // check for dial at zero
+                if (dial == 0)
                     counter++;
 
                 System.out.println(line);
