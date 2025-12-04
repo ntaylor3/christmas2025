@@ -54,6 +54,8 @@ public class DayTwo2 {
                 }
 
             }
+
+            bf.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

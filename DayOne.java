@@ -33,6 +33,9 @@ public class DayOne {
                 System.out.println(line);
                 System.out.println(counter);
             }
+
+            bf.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

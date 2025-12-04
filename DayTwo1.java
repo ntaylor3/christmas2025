@@ -35,11 +35,12 @@ public class DayTwo1 {
                 }
 
             }
+
+            bf.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         System.out.println(counter);
-
     }
 }

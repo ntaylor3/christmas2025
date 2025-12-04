@@ -62,6 +62,7 @@ public class DayFour2 {
                                 blocked++;
                         }
 
+                        // where successful, remove the roll, set flag to iterate again
                         if (blocked < 4) {
                             shelves[i][j] = '.';
                             accessible++;
