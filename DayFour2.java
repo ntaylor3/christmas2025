@@ -26,54 +26,49 @@ public class DayFour2 {
         }
 
         int accessible = 0;
-        boolean success = true;
 
-        // just keep doing this until we're stuck...
-        while (success) {
-            success = false;
+        // iterate array and check each direction from the current position
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (shelves[i][j] == '@') {
+                    int blocked = 0;
 
-            // iterate array and check each direction from the current position
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    if (shelves[i][j] == '@') {
-                        int blocked = 0;
+                    if (i > 0) {
 
-                        if (i > 0) {
-
-                            if (j > 0 && shelves[i - 1][j - 1] == '@')
-                                blocked++;
-                            if (shelves[i - 1][j] == '@')
-                                blocked++;
-                            if (j < width - 1 && shelves[i - 1][j + 1] == '@')
-                                blocked++;
-                        }
-
-                        if (j > 0 && shelves[i][j - 1] == '@')
+                        if (j > 0 && shelves[i - 1][j - 1] == '@')
                             blocked++;
-                        if (j < width - 1 && shelves[i][j + 1] == '@')
+                        if (shelves[i - 1][j] == '@')
                             blocked++;
-
-                        if (i < height - 1) {
-                            if (j > 0 && shelves[i + 1][j - 1] == '@')
-                                blocked++;
-                            if (shelves[i + 1][j] == '@')
-                                blocked++;
-                            if (j < width - 1 && shelves[i + 1][j + 1] == '@')
-                                blocked++;
-                        }
-
-                        // where successful, remove the roll, set flag to iterate again
-                        if (blocked < 4) {
-                            shelves[i][j] = '.';
-                            accessible++;
-                            success = true;
-
-                        }
+                        if (j < width - 1 && shelves[i - 1][j + 1] == '@')
+                            blocked++;
                     }
 
-                    System.out.println(accessible);
+                    if (j > 0 && shelves[i][j - 1] == '@')
+                        blocked++;
+                    if (j < width - 1 && shelves[i][j + 1] == '@')
+                        blocked++;
 
+                    if (i < height - 1) {
+                        if (j > 0 && shelves[i + 1][j - 1] == '@')
+                            blocked++;
+                        if (shelves[i + 1][j] == '@')
+                            blocked++;
+                        if (j < width - 1 && shelves[i + 1][j + 1] == '@')
+                            blocked++;
+                    }
+
+                    // where successful, remove the roll, then rewind the counters
+                    if (blocked < 4) {
+                        shelves[i][j] = '.';
+                        i -= 1;
+                        if (i < 0)
+                            i = 0;
+                        j = -1;
+                        accessible++;
+                    }
                 }
+
+                System.out.println(accessible);
             }
         }
 
