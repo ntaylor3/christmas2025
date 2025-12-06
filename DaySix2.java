@@ -10,21 +10,18 @@ public class DaySix2 {
 
     public static void main(String[] args) throws IOException {
 
-        BufferedReader bf = new BufferedReader(new FileReader("input6.txt"));
+        List<String> lines = Files.readAllLines(new File("input6.txt").toPath());
 
         // figure out the length of the longest line
         int maxLength = 0;
-        String line = "";
-        while (bf.ready()) {
-            line = bf.readLine();
-            if (line.length() > maxLength)
-                maxLength = line.length();
+        for(String l : lines) {
+            if (l.length() > maxLength)
+                maxLength = l.length();
         }
-        bf.close();
 
         // check the number of operands to figure out how many sums we have
-        line = line.replace(" ", "").trim();
-        int numOfSums = line.length();
+        int numOfSums = lines.getLast().replace(" ", "").trim().length();
+        System.out.println("Number of sums: " + numOfSums);
 
         // create empty sum objects
         Vector<DaySix2> sums = new Vector<DaySix2>(numOfSums);
@@ -32,7 +29,6 @@ public class DaySix2 {
             sums.add(new DaySix2());
 
         // count backwards from the end of the longest line...
-        List<String> lines = Files.readAllLines(new File("input6.txt").toPath());
         int currentSum = numOfSums - 1;
         boolean endFound = false;
         for (int i = maxLength - 1; i >= 0; i--) {
