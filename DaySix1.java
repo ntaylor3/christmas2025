@@ -4,7 +4,7 @@ import java.util.Vector;
 public class DaySix1 {
 
     private Vector<Long> values = new Vector<Long>();
-    private char operand = ' ';
+    private char operator = ' ';
 
     public static void main(String[] args) throws IOException {
 
@@ -24,9 +24,9 @@ public class DaySix1 {
                 if (sums.size() <= i)
                     sums.add(new DaySix1());
 
-                // add value or operand as appropriate
+                // add value or operator as appropriate
                 if (parts[i].equals("+") || parts[i].equals("*")) {
-                    sums.get(i).setOperand(parts[i].charAt(0));
+                    sums.get(i).setOperator(parts[i].charAt(0));
                 } else
                     sums.get(i).addValue(Long.parseLong(parts[i]));
             }
@@ -48,14 +48,14 @@ public class DaySix1 {
         values.add(value);
     }
 
-    // set + or * as the operand
-    public void setOperand(char operand) {
-        this.operand = operand;
+    // set + or * as the operator
+    public void setOperator(char operator) {
+        this.operator = operator;
     }
 
     // work out the answer for this sum
     public long calculate() {
-        if (operand == '+') {
+        if (operator == '+') {
             long sum = 0;
             for (long val : values)
                 sum += val;

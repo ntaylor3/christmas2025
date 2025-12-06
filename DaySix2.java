@@ -6,7 +6,7 @@ import java.util.Vector;
 public class DaySix2 {
 
     private Vector<Long> values = new Vector<Long>();
-    private char operand = ' ';
+    private char operator = ' ';
 
     public static void main(String[] args) throws IOException {
 
@@ -19,7 +19,7 @@ public class DaySix2 {
                 maxLength = l.length();
         }
 
-        // check the number of operands to figure out how many sums we have
+        // check the number of operator to figure out how many sums we have
         int numOfSums = lines.getLast().replace(" ", "").trim().length();
 
         // create empty sum objects
@@ -39,9 +39,9 @@ public class DaySix2 {
                 // check for short lines
                 if (l.length() > i) {
                     char c = l.charAt(i);
-                    // add operand if found, note that we've reached the end of this sum
+                    // add operator if found, note that we've reached the end of this sum
                     if (c == '*' || c == '+') {
-                        sums.get(currentSum).setOperand(c);
+                        sums.get(currentSum).setOperator(c);
                         endFound = true;
                     }
                     // otherwise, if its not blank, add to the buffer
@@ -54,7 +54,7 @@ public class DaySix2 {
             if (!buffer.equals("")) {
                 sums.get(currentSum).addValue(Long.parseLong(buffer));
             }
-            // if we found an operand, move to the next sum
+            // if we found an operator, move to the next sum
             if (endFound) {
                 currentSum--;
                 endFound = false;
@@ -76,14 +76,14 @@ public class DaySix2 {
         values.add(value);
     }
 
-    // set + or * as the operand
-    public void setOperand(char operand) {
-        this.operand = operand;
+    // set + or * as the operator
+    public void setOperator(char operator) {
+        this.operator = operator;
     }
 
     // work out the answer for this su
     public long calculate() {
-        if (operand == '+') {
+        if (operator == '+') {
             long sum = 0;
             for (long val : values) {
                 sum += val;
