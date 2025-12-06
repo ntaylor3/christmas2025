@@ -21,7 +21,6 @@ public class DaySix2 {
 
         // check the number of operands to figure out how many sums we have
         int numOfSums = lines.getLast().replace(" ", "").trim().length();
-        System.out.println("Number of sums: " + numOfSums);
 
         // create empty sum objects
         Vector<DaySix2> sums = new Vector<DaySix2>(numOfSums);
