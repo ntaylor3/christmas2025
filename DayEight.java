@@ -2,7 +2,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
-public class DayEight1 {
+public class DayEight {
     public static void main(String[] args) throws IOException {
         // create list of all nodes
         ArrayList<Node> nodes = new ArrayList<Node>();
@@ -28,11 +28,12 @@ public class DayEight1 {
             circuits.add(new Circuit(node));
         }
 
-        // for the shortest 1000 edges...
-        for (int i = 0; i < 1000; i++) {
-            Edge edge = edges.get(i);
+        // process edges from shortest to longest until all nodes are in one circuit
+        Edge lastEdge = null;
+        int i=0;
+        for (Edge edge : edges) {
             HashSet<Circuit> toMerge = new HashSet<Circuit>();
-
+            
             // find circuits containing either node of the edge
             for (Circuit circuit : circuits) {
                 if (circuit.contains(edge.a) || circuit.contains(edge.b)) {
@@ -49,13 +50,22 @@ public class DayEight1 {
             }
             merged.addEdge(edge);
             circuits.add(merged);
+
+            //if
+            if(i++==1000)
+            {
+            	circuits.sort(null);
+                Collections.reverse(circuits);
+                System.out.println("Part 1: "+circuits.get(0).getSize() * circuits.get(1).getSize() * circuits.get(2).getSize());
+            }
+
+            //if cricuit is not complete, we can stop, saving the last edge used
+            if (circuits.size() == 1) {
+                lastEdge = edge;
+                System.out.println("Part 2: "+lastEdge.a.x * lastEdge.b.x);
+                break;
+            }
         }
-
-        // multiply sizes of the three largest circuits
-        circuits.sort(null);
-        Collections.reverse(circuits);
-        System.out.println(circuits.get(0).getSize() * circuits.get(1).getSize() * circuits.get(2).getSize());
-
     }
 }
 
