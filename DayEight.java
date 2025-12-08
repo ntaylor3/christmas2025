@@ -47,7 +47,6 @@ public class DayEight {
                 merged.mergeCircuit(circuit);
                 circuits.remove(circuit);
             }
-            merged.addEdge(edge);
             circuits.add(merged);
 
             // if we've done 1000, answer part 1 by multiplying three biggest circuits
