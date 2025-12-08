@@ -133,12 +133,8 @@ class Circuit implements Comparable<Circuit> {
 
     // merge another circuit into this one
     public void mergeCircuit(Circuit other) {
-        for (Node node : other.nodes) {
-            nodes.add(node);
-        }
-        for (Edge edge : other.edges) {
-            edges.add(edge);
-        }
+        nodes.addAll(other.nodes);
+        edges.addAll(other.edges);
     }
 
     // number of nodes in the circuit
