@@ -29,7 +29,6 @@ public class DayEight {
         }
 
         // process edges from shortest to longest until all nodes are in one circuit
-        Edge lastEdge = null;
         int i=0;
         for (Edge edge : edges) {
             HashSet<Circuit> toMerge = new HashSet<Circuit>();
@@ -51,7 +50,7 @@ public class DayEight {
             merged.addEdge(edge);
             circuits.add(merged);
 
-            //if
+            //if we've done 1000, answer part 1 by multiplying three biggest circuits
             if(i++==1000)
             {
             	circuits.sort(null);
@@ -59,10 +58,9 @@ public class DayEight {
                 System.out.println("Part 1: "+circuits.get(0).getSize() * circuits.get(1).getSize() * circuits.get(2).getSize());
             }
 
-            //if cricuit is not complete, we can stop, saving the last edge used
+            //if cricuit is not complete, we can stop, multiplying x coords of the two nodes of the last edge
             if (circuits.size() == 1) {
-                lastEdge = edge;
-                System.out.println("Part 2: "+lastEdge.a.x * lastEdge.b.x);
+                System.out.println("Part 2: "+edge.a.x * edge.b.x);
                 break;
             }
         }
