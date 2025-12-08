@@ -28,7 +28,7 @@ public class DayEight {
             circuits.add(new Circuit(node));
         }
 
-        // process edges from shortest to longest until all nodes are in one circuit
+        // process edges from shortest to longest building circuits until solved
         int i = 0;
         for (Edge edge : edges) {
             HashSet<Circuit> toMerge = new HashSet<Circuit>();
@@ -41,7 +41,6 @@ public class DayEight {
             }
 
             // merge circuits containing either node of the edge, removing the original
-            // circuits
             Circuit merged = new Circuit(edge);
             for (Circuit circuit : toMerge) {
                 merged.mergeCircuit(circuit);
@@ -57,8 +56,7 @@ public class DayEight {
                         "Part 1: " + circuits.get(0).getSize() * circuits.get(1).getSize() * circuits.get(2).getSize());
             }
 
-            // if cricuit is now complete, we can stop, multiplying x coords of the two
-            // nodes of the last edge
+            // if we've merged down to one circuit, stop and multiply x coords of final edge
             if (circuits.size() == 1) {
                 System.out.println("Part 2: " + edge.a.x * edge.b.x);
                 break;
@@ -144,5 +142,4 @@ class Circuit implements Comparable<Circuit> {
     public int compareTo(Circuit other) {
         return Integer.compare(this.getSize(), other.getSize());
     }
-
 }
