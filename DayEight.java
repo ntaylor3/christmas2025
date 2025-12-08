@@ -29,10 +29,10 @@ public class DayEight {
         }
 
         // process edges from shortest to longest until all nodes are in one circuit
-        int i=0;
+        int i = 0;
         for (Edge edge : edges) {
             HashSet<Circuit> toMerge = new HashSet<Circuit>();
-            
+
             // find circuits containing either node of the edge
             for (Circuit circuit : circuits) {
                 if (circuit.contains(edge.a) || circuit.contains(edge.b)) {
@@ -50,17 +50,18 @@ public class DayEight {
             merged.addEdge(edge);
             circuits.add(merged);
 
-            //if we've done 1000, answer part 1 by multiplying three biggest circuits
-            if(i++==1000)
-            {
-            	circuits.sort(null);
+            // if we've done 1000, answer part 1 by multiplying three biggest circuits
+            if (i++ == 1000) {
+                circuits.sort(null);
                 Collections.reverse(circuits);
-                System.out.println("Part 1: "+circuits.get(0).getSize() * circuits.get(1).getSize() * circuits.get(2).getSize());
+                System.out.println(
+                        "Part 1: " + circuits.get(0).getSize() * circuits.get(1).getSize() * circuits.get(2).getSize());
             }
 
-            //if cricuit is not complete, we can stop, multiplying x coords of the two nodes of the last edge
+            // if cricuit is now complete, we can stop, multiplying x coords of the two
+            // nodes of the last edge
             if (circuits.size() == 1) {
-                System.out.println("Part 2: "+edge.a.x * edge.b.x);
+                System.out.println("Part 2: " + edge.a.x * edge.b.x);
                 break;
             }
         }
