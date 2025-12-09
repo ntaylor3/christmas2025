@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.Rectangle2D;
 
-public class DayNine1 {
+public class DayNine {
     public static void main(String[] args) throws IOException {
 
         // create list of all points and define a polygon based on them
