@@ -28,12 +28,13 @@ public class DayNine {
         for (int i = 0; i < points.size(); i++) {
             for (int j = i + 1; j < points.size(); j++) {
 
-                // work out area of each rectangle
+                // work out area of each rectangle. adding 1 to each dimension to account
+                // for these being boxes not coordinates
                 int width = Math.abs(points.get(i).x - points.get(j).x) + 1;
                 int height = Math.abs(points.get(i).y - points.get(j).y) + 1;
                 long area = (long) width * (long) height;
 
-                // Part 1: find the biggest one for
+                // Part 1: find the biggest rectangle
                 if (area > biggestArea1) {
                     biggestArea1 = area;
                 }
