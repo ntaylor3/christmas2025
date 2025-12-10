@@ -72,18 +72,13 @@ class Machine {
             depth++;
             ArrayList<Attempt> newAttempts = new ArrayList<Attempt>();
             for (Attempt currentAttempt : currentAttempts) {
-                if (!currentAttempt.isStuck()) {
-                    for (Button button : this.buttons) {
-                        Attempt child = currentAttempt.getChild(button);
-                        if (child.isComplete()) {
-                            // if the child is compelte, return the depth and finish
-                            return depth;
-                        } else if (!child.isStuck()) {
-                            // if the child is not stuck, add it to the new attempts for the next layer
-                            // otherwise it can be abandoned
-                            newAttempts.add(child);
-                        }
+                for (Button button : this.buttons) {
+                    Attempt child = currentAttempt.getChild(button);
+                    // if the child is compelte, return the depth and finish
+                    if (child.isComplete()) {
+                        return depth;
                     }
+                    newAttempts.add(child);
                 }
             }
             currentAttempts = newAttempts;
@@ -98,8 +93,8 @@ class Button {
 
     public Button(String input, int numLights) {
 
-        //build the bit mask for this button, i.e if it toggles a light
-        //then that bit is 1, otherwise 0
+        // build the bit mask for this button, i.e if it toggles a light
+        // then that bit is 1, otherwise 0
         String[] parts = input.split(",");
         this.text = input;
         String maskString = "";
@@ -120,7 +115,6 @@ class Attempt {
 
     int targetState;
     HashSet<Integer> seenStates = new HashSet<Integer>();
-    boolean stuck = false;
     boolean complete = false;
     Button nextButton;
     ArrayList<Button> buttonSequence;
@@ -138,11 +132,7 @@ class Attempt {
         for (Button b : buttonSequence) {
             currentState = currentState ^ b.mask;
         }
-        //if we've seen this new state before, we're stuck in a loop
-        if (seenStates.contains(currentState)) {
-            stuck = true;
-        }
-        //if it mathches the target state, we're complete
+        // if it mathches the target state, we're complete
         if (currentState == targetState) {
             complete = true;
         }
@@ -155,14 +145,8 @@ class Attempt {
         return new Attempt(targetState, newButtonsTried);
     }
 
-    public boolean isStuck() {
-
-        return stuck;
-    }
-
     public boolean isComplete() {
 
         return complete;
     }
-
 }

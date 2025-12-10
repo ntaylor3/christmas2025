@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DayTen2 {
+// This was an attempt to solve part 2 of day 10 using a similar approach to part 1,
+// which works for the test data but runs out of memory on the full input!
+
+public class DayTen2a {
     public static void main(String[] args) throws IOException {
 
         System.out.println("Day 10 Part 2");
@@ -17,7 +20,7 @@ public class DayTen2 {
             Machine machine = new Machine(line);
             total += machine.solve();
         }
-        //System.out.println("Part 1: " + total);
+        System.out.println("Part 1: " + total);
     }
 }
 
@@ -29,15 +32,15 @@ class Machine {
     // parse input string to create machine
     public Machine(String target) {
         String[] parts = target.split(" "); 
-        int length = 0;
 
         System.out.println("Parsing machine: " + target);  
         
-
+        int length = 0;
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].substring(1, parts[i].length() - 1);
             if (i == 0) {
-                //ignore the wiring diagram for part 2
+                //use the wiring diagram to quickly get the length
+                length = parts[i].length();
             } else if (i == parts.length - 1) {
                 //parse the joltage
                 System.out.println("Parsing target state: " + parts[i]);
@@ -49,7 +52,9 @@ class Machine {
                 System.out.println("Target State: " + Arrays.toString(targetState));
             } else {
                 // for the remaining parts, use them to create buttons
-                buttons.add(new Button(parts[i], length - 2));
+                System.out.println("Cresting button from: " + parts[i]);
+
+                buttons.add(new Button(parts[i], length));
             }
         }
     }
@@ -69,6 +74,7 @@ class Machine {
             // at the new depth, spawn a new layer of attempts from the current attempts
             // adding an extra button to each one
             depth++;
+            System.out.println("Depth: " + depth + " Current Attempts: " + currentAttempts.size());
             ArrayList<Attempt> newAttempts = new ArrayList<Attempt>();
             for (Attempt currentAttempt : currentAttempts) {
                 if (!currentAttempt.isStuck()) {
@@ -130,14 +136,22 @@ class Attempt {
 
         // run the sequence of button presses
         for (Button b : buttonSequence) {
+            //System.out.println("Current State before: " + Arrays.toString(currentState));
+            //System.out.println("Applying mask: " + Arrays.toString(b.mask));
             for (int i = 0; i < currentState.length; i++) {
                 currentState[i] = currentState[i] + b.mask[i];
             }
+             //System.out.println("Current State after: " + Arrays.toString(currentState));
         }
-        //if we've seen this new state before, we're stuck in a loop
-        //if (seenStates.contains(currentState)) {
-        //   stuck = true;
-        //}
+
+        //check if anything has overshot and mark us as stuck
+        for (int i = 0; i < currentState.length; i++) {
+            if (currentState[i] > targetState[i]) {
+                stuck = true;
+                //System.out.println("Overshoot!");
+            }
+        }
+
         //if it mathches the target state, we're complete
         if (Arrays.equals(currentState, targetState)) {
             complete = true;
