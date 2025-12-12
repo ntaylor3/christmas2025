@@ -16,12 +16,27 @@ public class DayTen2 {
 
         // create machines from each line of input and construct neccessary Python code
         String python = "from z3 import * \n\n";
-        python += "runningTotal = 0\n\n";
+        python += "runningTotal = 0\n\n" +
+                        "a = Int('a')\n" + 
+                        "b = Int('b')\n" + 
+                        "c = Int('c')\n" + 
+                        "d = Int('d')\n" + 
+                        "e = Int('e')\n" + 
+                        "f = Int('f')\n" + 
+                        "g = Int('g')\n" + 
+                        "h = Int('h')\n" + 
+                        "i = Int('i')\n" + 
+                        "j = Int('j')\n" +
+                        "k = Int('k')\n" + 
+                        "l = Int('l')\n" + 
+                        "m = Int('m')\n" + 
+                        "x = Int('x')\n\n";
         List<String> lines = Files.readAllLines(new File("input10.txt").toPath());
         for (String line : lines) {
             EquationSet machine = new EquationSet(line);
             python += machine.getPython() + "\n\n";
         }
+        python += "print(runningTotal)";
 
         // output the python code to a file
         Files.write(new File("DayTen2.py").toPath(), python.getBytes());
@@ -104,14 +119,8 @@ class EquationSet {
     public String getPython() {
         String python = "";
 
-        // create variables and solver
-        for (int i = 0; i < numButtons; i++) {
-            python += (char) ('a' + i) + " = Int('" + (char) ('a' + i) + "')\n";
-        }
-        python += "x = Int('x')\n";
+        // create solver and add equations
         python += "s = Solver()\n";
-
-        // add equations to solver
         for (Equation eq : equestions) {
             python += "s.add(" + eq.toString().replace(" = ", " == ") + ")\n";
         }
@@ -136,10 +145,7 @@ class EquationSet {
         python += "    if tempTotal==0 or s.model()[x].as_long() < tempTotal:\n";
         python += "        tempTotal = s.model()[x].as_long()\n";
         python += "    s.add(x < s.model()[x])\n";
-        python += "print(tempTotal)\n";
         python += "runningTotal += tempTotal\n";
-        python += "print(runningTotal)\n";
-        python += "print(\"Done\")\n";
 
         return python;
     }
