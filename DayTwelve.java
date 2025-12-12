@@ -8,10 +8,10 @@ public class DayTwelve {
 
         List<String> lines = Files.readAllLines(new File("input12.txt").toPath());
         int successCount = 0;
-        for (int i=0; i<lines.size(); i++) {
-            if(lines.get(i).contains("x")){
+        for (String line : lines) {
+            if(line.contains("x")){
                 
-                String[] parts = lines.get(i).split(":");
+                String[] parts = line.split(":");
                 
                 //figure out how many simple 3x3 boxes fit under the tree
                 String[] dimensions = parts[0].trim().split("x");
