@@ -18,8 +18,7 @@ public class DayTwelve {
                 int simpleBoxCount = (Integer.parseInt(dimensions[0]) / 3) * (Integer.parseInt(dimensions[1]) / 3);
 
                 //count the total presents
-                parts[1] = parts[1].trim();
-                parts = parts[1].split(" ");
+                parts = parts[1].trim().split(" ");
                 int presentCount = 0;
                 for(int j=0; j<6; j++) {
                     presentCount += Integer.parseInt(parts[j]);
